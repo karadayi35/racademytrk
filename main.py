@@ -21,7 +21,7 @@ async def send_message_with_image():
             # Mesaj metni
             crown_emoji = "👑"
             message_text = f"{crown_emoji} EN İYİ CASİNO SİTELERİ - TÜRKİYE\n\n" \
-
+                           "Türkiye'nin en iyi casino sitelerini sizin için listeledik.\n" \
 
             # Butonlar
             buttons = [
@@ -34,7 +34,6 @@ async def send_message_with_image():
             ]
 
             # Inline keyboard ile butonlar
-
             reply_markup = telegram.InlineKeyboardMarkup(buttons)
 
             # Asenkron olarak mesaj gönder
@@ -46,14 +45,14 @@ async def send_message_with_image():
 
 # Schedule kullanımı için asenkron işlevi sarmalayan bir fonksiyon
 def job_wrapper():
-    asyncio.ensure_future(send_message_with_image())
+    asyncio.run(send_message_with_image())
 
 
-# Her 5 saniyede bir mesaj paylaşımı için:
+# Her 3 saatte bir mesaj paylaşımı için:
 schedule.every(3).hours.do(job_wrapper)
 
 
-# Asenkron döngüyü sürekli çalıştır
+# Schedule işlevini senkron çalıştırıp asenkron işlev çağırma
 async def run_schedule():
     while True:
         schedule.run_pending()
@@ -62,10 +61,7 @@ async def run_schedule():
 
 # Ana asenkron döngü
 if __name__ == "__main__":
-    loop = asyncio.get_event_loop()
     try:
-        loop.run_until_complete(run_schedule())
+        asyncio.run(run_schedule())
     except KeyboardInterrupt:
-        pass
-    finally:
-        loop.close()
+        print("Program sonlandırıldı.")
