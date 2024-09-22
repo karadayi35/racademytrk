@@ -11,7 +11,6 @@ CHAT_ID = "-1002214510803"  # Kanal ID'niz
 # Botu başlatın
 bot = Bot(token=TOKEN)
 
-
 # Asenkron mesaj gönderme fonksiyonu
 async def send_message_with_image():
     try:
@@ -45,10 +44,12 @@ async def send_message_with_image():
 
 # Schedule kullanımı için asenkron işlevi sarmalayan bir fonksiyon
 def job_wrapper():
-    asyncio.run(send_message_with_image())
+    # Mevcut event loop'u alıp içinde asenkron görevi başlatacağız
+    loop = asyncio.get_event_loop()
+    loop.create_task(send_message_with_image())
 
 
-# Her 3 saatte bir mesaj paylaşımı için:
+# Her 3 saatte bir mesaj paylaşımı için (test etmek için her 3 saniye ayarlandı):
 schedule.every(3).seconds.do(job_wrapper)
 
 
