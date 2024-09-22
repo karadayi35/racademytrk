@@ -49,7 +49,7 @@ def job_wrapper():
 
 
 # Her 3 saatte bir mesaj paylaşımı için:
-schedule.every(3).hours.do(job_wrapper)
+schedule.every(3).seconds.do(job_wrapper)
 
 
 # Schedule işlevini senkron çalıştırıp asenkron işlev çağırma
